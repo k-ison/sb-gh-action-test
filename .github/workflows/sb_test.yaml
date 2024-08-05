@@ -24,4 +24,6 @@ jobs:
       
       - name: Link
         run: supabase link --project-ref ucmhfwjiqefnulgkkotk
+
+      - name: Reset
         run: supabase db reset --linked
