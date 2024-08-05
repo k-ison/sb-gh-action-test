@@ -24,6 +24,7 @@ jobs:
       
       - name: Migrate db
         run: supabase migration up
+        run: supabase db reset --linked
 
       - name: Curl todos
         run: |
