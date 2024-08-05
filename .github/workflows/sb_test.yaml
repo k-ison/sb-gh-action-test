@@ -21,9 +21,12 @@ jobs:
 
       - name: Login
         run: supabase login --no-browser --token sbp_4ff1255053f5070b593c6582be586c2f3f865bd2
-      
+
       - name: Link
         run: supabase link --project-ref ucmhfwjiqefnulgkkotk
+
+      - name: Migrate db
+        run: supabase migration up
 
       - name: Reset
         run: supabase db reset --linked
