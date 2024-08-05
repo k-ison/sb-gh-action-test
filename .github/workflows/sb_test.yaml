@@ -19,14 +19,11 @@ jobs:
         with:
           version: latest
 
-      - name: Start db
-        run: supabase db start
+      - name: Login
+        run: supabase login --no-browser --token sbp_4ff1255053f5070b593c6582be586c2f3f865bd2
       
-      - name: Migrate db
-        run: supabase migration up
+      - name: Link
+        run: supabase link --project-ref ucmhfwjiqefnulgkkotk
 
-      - name: Curl todos
-        run: |
-          curl 'http://localhost:8000/rest/v1/' \
-            -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-            -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+      - name: Reset
+        run: supabase db reset --linked
