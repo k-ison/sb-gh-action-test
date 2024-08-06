@@ -1,32 +1,20 @@
-name: Test
+name: Deploy Function
 
 on:
-  pull_request_target:
-    types:
-      - opened
+  push:
+    branches:
+      - main
+  # workflow_dispatch:
 
 jobs:
-  db-check:
-    permissions: write-all
+  deploy-dev:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout actions
-        uses: actions/checkout@v3
-
-      - name: Supabase setup
-        uses: supabase/setup-cli@v1
+      - uses: actions/checkout@v3
+      - uses: supabase/setup-cli@v1
         with:
           version: latest
-
-      - name: Login
-        run: supabase login --no-browser --token sbp_4ff1255053f5070b593c6582be586c2f3f865bd2
-
-      - name: Link
-        run: supabase link --project-ref ucmhfwjiqefnulgkkotk
-
-      - name: Migrate db
-        run: supabase migration up
-
-      - name: Reset
-        run: supabase db reset --linked
+      - run: npx supabase login --no-browser --token $TOKEN
+      - run: supabase functions deploy --project-ref $PROJECT_REF --no-verify-jwt --debug --experimental
+      - run: supabase link --project-ref $PROJECT_REF -p $DB_PASSWORD
+      - run: supabase db reset --linked <<< $DB_PASSWORD <<< y
