@@ -17,4 +17,3 @@ jobs:
       - run: npx supabase login --no-browser --token $TOKEN
       - run: supabase functions deploy --project-ref $PROJECT_REF --no-verify-jwt --debug --experimental
       - run: supabase link --project-ref $PROJECT_REF -p $DB_PASSWORD
-      - run: supabase db reset --linked <<< $DB_PASSWORD <<< y
